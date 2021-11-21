@@ -18,6 +18,7 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,10 +28,12 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
-    SensorManager sensorManager;
-    TextView tv_Steps;
-    SharedPreferences sharedPreferences;
-    int ACTIVITY_RECOGNITION_CODE = 1;
+    private SensorManager sensorManager;
+    private TextView tv_Steps;
+    private SharedPreferences sharedPreferences;
+    private int ACTIVITY_RECOGNITION_CODE = 1;
+    private ProgressBar stepsProgressBar;
+    private int stepsTarget = 600;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -40,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         tv_Steps = (TextView) findViewById(R.id.textView_Steps);
+        stepsProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
@@ -61,10 +65,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (sharedPreferences.contains(currentDate)) {
             int v = sharedPreferences.getInt(currentDate, 1);
             tv_Steps.setText(String.valueOf(v));
+            stepsProgressBar.setProgress( 100 * v / this.stepsTarget );
         }
 
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
         } else {
             requestActivityPermission();
         }
@@ -114,6 +119,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             value = value + 1;
             sharedPreferences.edit().putInt(currentDate, value).apply();
             tv_Steps.setText(String.valueOf(value));
+            stepsProgressBar.setProgress( 100 * value / this.stepsTarget);
         }
     }
 
