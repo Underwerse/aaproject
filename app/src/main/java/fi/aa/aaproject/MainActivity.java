@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         tv_Steps = (TextView) findViewById(R.id.textView_Steps);
 
-        tv_Steps.setText(0);
     }
 
     @Override
