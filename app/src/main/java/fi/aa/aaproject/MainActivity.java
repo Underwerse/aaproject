@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -18,6 +19,8 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,53 +31,115 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
+    // Defining all the variables
+    // Android sensor (for steps activity following) initiation
     private SensorManager sensorManager;
     private TextView tv_Steps;
+    private ProgressBar stepsProgressBar;
+    private Sensor countSensor;
+
+    // Max day steps qty
+    private int stepsTarget = 600;
+
+    // Saving day-steps preferences into default Android DB initiation
     private SharedPreferences sharedPreferences;
     private int ACTIVITY_RECOGNITION_CODE = 1;
-    private ProgressBar stepsProgressBar;
-    private int stepsTarget = 600;
+
+
+    // More activities buttons initiation
+    private Button btnCalendar;
+    private Button btnSleep;
+    private Button btnWater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        // Initial methods
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Current all the Main activity's variables
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         tv_Steps = (TextView) findViewById(R.id.textView_Steps);
         stepsProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        btnCalendar = (Button) findViewById(R.id.btn_calendar);
+        btnSleep = (Button) findViewById(R.id.btn_sleep);
+        btnWater = (Button) findViewById(R.id.btn_water);
 
+        // Today's date variable creation
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         sharedPreferences = this.getSharedPreferences("fi.aa.aaproject", Context.MODE_PRIVATE);
         SharedPreferences.Editor ed;
 
-        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
-
+        // Check if device has steps counter sensor or not
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
         } else {
             Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
         }
 
+        // Check if there is saved steps data in the local DB or not
         if (!sharedPreferences.contains(currentDate)) {
             sharedPreferences.edit().putInt(currentDate, 0).apply();
         }
-
         if (sharedPreferences.contains(currentDate)) {
             int v = sharedPreferences.getInt(currentDate, 1);
             tv_Steps.setText(String.valueOf(v));
             stepsProgressBar.setProgress( 100 * v / this.stepsTarget );
         }
 
+        // Check if user granted device activity permission or not
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
 //            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
         } else {
+            // Request needed permission method
             requestActivityPermission();
         }
+
+        // Setting onClickListeners to buttons for moving into another activities
+        btnCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCalendarActivity();
+            }
+        });
+
+        btnSleep.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openSleepActivity();
+            }
+        });
+
+        btnWater.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openWaterActivity();
+            }
+        });
     }
 
+    // Defining methods for opening the activities
+    public void openCalendarActivity() {
+        Intent intent = new Intent(this, CalendarActivity.class);
+        startActivity(intent);
+    }
+
+    public void openSleepActivity() {
+        Intent intent = new Intent(this, SleepActivity.class);
+        startActivity(intent);
+    }
+
+    public void openWaterActivity() {
+        Intent intent = new Intent(this, WaterActivity.class);
+        startActivity(intent);
+    }
+
+    /**
+     * Requesting Activity_Recognition permissions from user
+     */
     private void requestActivityPermission() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACTIVITY_RECOGNITION)) {
             new AlertDialog.Builder(this)
@@ -98,6 +163,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    // Getting message of permission requesting result
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -110,14 +176,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
     }
 
+    // Steps counter detection processing
     @Override
     public void onSensorChanged(SensorEvent event) {
         String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        Log.i("date", currentDate);
         if (sharedPreferences.contains(currentDate)) {
             int value = sharedPreferences.getInt(currentDate, 1);
-            value = value + 1;
+            value += 1;
+
+            // Record updated steps data into local Android DB
             sharedPreferences.edit().putInt(currentDate, value).apply();
+
+            // Updating text field and progress bar with the last fixed steps
             tv_Steps.setText(String.valueOf(value));
             stepsProgressBar.setProgress( 100 * value / this.stepsTarget);
         }
@@ -125,6 +195,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        // Due to we implemet SensorEventListener, we have to define this function too (even without a code)
     }
 }
