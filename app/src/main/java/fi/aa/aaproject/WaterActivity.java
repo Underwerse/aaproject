@@ -9,22 +9,22 @@ import android.widget.ImageView;
 
 public class WaterActivity extends AppCompatActivity {
 
+    private Button nappiNayta;
+    private Button nappiResetoi;
+    private ImageView getKuva0;
+    private ImageView getKuva1;
+    private ImageView getKuva2;
+    private ImageView getKuva3;
+    private ImageView getKuva4;
+    private ImageView getKuva5;
+    private ImageView getKuva6;
+    private ImageView getKuva7;
+    private ImageView getKuva8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
-
-         Button nappiNayta;
-         Button nappiResetoi;
-         ImageView getKuva0;
-         ImageView getKuva1;
-         ImageView getKuva2;
-         ImageView getKuva3;
-         ImageView getKuva4;
-         ImageView getKuva5;
-         ImageView getKuva6;
-         ImageView getKuva7;
-         ImageView getKuva8;
 
         getKuva0 = (ImageView) findViewById(R.id.kuva0);
         getKuva1 = (ImageView) findViewById(R.id.kuva1);
@@ -45,19 +45,16 @@ public class WaterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 getKuva0.setVisibility(View.VISIBLE);
-                getKuva1.setVisibility(View.VISIBLE);
-                getKuva2.setVisibility(View.VISIBLE);
-                getKuva3.setVisibility(View.VISIBLE);
-                getKuva4.setVisibility(View.VISIBLE);
-                getKuva5.setVisibility(View.VISIBLE);
-                getKuva6.setVisibility(View.VISIBLE);
-                getKuva7.setVisibility(View.VISIBLE);
-                getKuva8.setVisibility(View.VISIBLE);
-
-
+                getKuva1.setVisibility(View.INVISIBLE);
+                getKuva2.setVisibility(View.INVISIBLE);
+                getKuva3.setVisibility(View.INVISIBLE);
+                getKuva4.setVisibility(View.INVISIBLE);
+                getKuva5.setVisibility(View.INVISIBLE);
+                getKuva6.setVisibility(View.INVISIBLE);
+                getKuva7.setVisibility(View.INVISIBLE);
+                getKuva8.setVisibility(View.INVISIBLE);
             }
         });
-
 
         nappiNayta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +92,6 @@ public class WaterActivity extends AppCompatActivity {
                                                                             @Override
                                                                             public void onClick(View v) {
                                                                                 getKuva8.setVisibility(View.INVISIBLE);
-
 
                                                                             }
                                                                         });
