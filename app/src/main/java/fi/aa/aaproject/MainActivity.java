@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         tv_Steps = (TextView) findViewById(R.id.textView_Steps);
-        stepsProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        stepsProgressBar = (ProgressBar) findViewById(R.id.pb_steps);
         btnCalendar = (Button) findViewById(R.id.btn_calendar);
         btnSleep = (Button) findViewById(R.id.btn_sleep);
         btnWater = (Button) findViewById(R.id.btn_water);
@@ -125,6 +125,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
+        // Testing data saving
         dataProcessor.setInt("28.11.2021" + ",steps", 555);
         dataProcessor.setInt("28.11.2021" + ",dreams", 8);
         dataProcessor.setInt("28.11.2021" + ",water", 1200);
