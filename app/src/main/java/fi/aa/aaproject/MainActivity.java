@@ -1,6 +1,5 @@
 package fi.aa.aaproject;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,7 +10,6 @@ import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -42,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int stepsTarget = 600;
 
     // Saving day-steps preferences into default Android DB initiation
-    private SharedPreferences sharedPreferences;
+//    private SharedPreferences sharedPreferences;
+    DataProcessor dataProcessor = new DataProcessor(this);
     private int ACTIVITY_RECOGNITION_CODE = 1;
 
 
@@ -68,10 +67,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnWater = (Button) findViewById(R.id.btn_water);
 
         // Today's date variable creation
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
-        sharedPreferences = this.getSharedPreferences("fi.aa.aaproject", Context.MODE_PRIVATE);
-        SharedPreferences.Editor ed;
+//        sharedPreferences = this.getSharedPreferences("fi.aa.aaproject", Context.MODE_PRIVATE);
+//        SharedPreferences.Editor ed;
 
         // Check if device has steps counter sensor or not
         if (countSensor != null) {
@@ -81,11 +80,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         }
 
         // Check if there is saved steps data in the local DB or not
-        if (!sharedPreferences.contains(currentDate)) {
-            sharedPreferences.edit().putInt(currentDate, 0).apply();
+        if (!dataProcessor.prefExists(currentDate)) {
+            dataProcessor.setInt(currentDate, 0);
         }
-        if (sharedPreferences.contains(currentDate)) {
-            int v = sharedPreferences.getInt(currentDate, 1);
+        if (dataProcessor.prefExists(currentDate)) {
+            int v = dataProcessor.getInt(currentDate);
             tv_Steps.setText(String.valueOf(v));
             stepsProgressBar.setProgress( 100 * v / this.stepsTarget );
         }
@@ -110,6 +109,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             @Override
             public void onClick(View v) {
                 openSleepActivity();
+
+                // Test case for sharedPrefs
+                String yesterdayDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(System.currentTimeMillis()-24*60*60*1000));
+                dataProcessor.setInt(yesterdayDate, 555);
+                Log.i("today", String.valueOf(dataProcessor.getInt(currentDate)));
+                Log.i("yesterday", String.valueOf(dataProcessor.getInt(yesterdayDate)));
             }
         });
 
@@ -119,6 +124,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 openWaterActivity();
             }
         });
+
+        dataProcessor.setInt("28.11.2021" + ",steps", 555);
+        dataProcessor.setInt("28.11.2021" + ",dreams", 8);
+        dataProcessor.setInt("28.11.2021" + ",water", 1200);
+        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
+        dataProcessor.setInt("27.11.2021" + ",dreams", 5);
+        dataProcessor.setInt("27.11.2021" + ",water", 900);
     }
 
     // Defining methods for opening the activities
@@ -179,13 +191,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // Steps counter detection processing
     @Override
     public void onSensorChanged(SensorEvent event) {
-        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
-        if (sharedPreferences.contains(currentDate)) {
-            int value = sharedPreferences.getInt(currentDate, 1);
+        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+        if (dataProcessor.prefExists(currentDate)) {
+            int value = dataProcessor.getInt(currentDate);
             value += 1;
 
             // Record updated steps data into local Android DB
-            sharedPreferences.edit().putInt(currentDate, value).apply();
+            dataProcessor.setInt(currentDate + ",steps", value);
 
             // Updating text field and progress bar with the last fixed steps
             tv_Steps.setText(String.valueOf(value));
@@ -195,6 +207,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        // Due to we implemet SensorEventListener, we have to define this function too (even without a code)
+        // Due to we implement SensorEventListener, we have to define this function too (even without a code)
     }
 }
