@@ -13,8 +13,7 @@ public class DataProcessor {
 
     public final static String PREFS_NAME = "fi.aa.aaproject";
 
-    public boolean prefExists(String key)
-    {
+    public boolean prefExists(String key) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.contains(key);
     }
@@ -29,25 +28,6 @@ public class DataProcessor {
     public int getInt(String key) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
         return prefs.getInt(key, 0);
-    }
-
-    public void setStr(String key, String value) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(key, value);
-        editor.apply();
-    }
-
-    public String getStr(String key) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        return prefs.getString(key,"DNF");
-    }
-
-    public void setBool(String key, boolean value) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,0);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean(key, value);
-        editor.apply();
     }
 
     public boolean getBool(String key) {

@@ -125,7 +125,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             }
         });
 
-        dataProcessor.setInt("28.11.2021", 555);
+        dataProcessor.setInt("28.11.2021" + ",steps", 555);
+        dataProcessor.setInt("28.11.2021" + ",dreams", 8);
+        dataProcessor.setInt("28.11.2021" + ",water", 1200);
+        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
+        dataProcessor.setInt("27.11.2021" + ",dreams", 5);
+        dataProcessor.setInt("27.11.2021" + ",water", 900);
     }
 
     // Defining methods for opening the activities
@@ -192,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             value += 1;
 
             // Record updated steps data into local Android DB
-            dataProcessor.setInt(currentDate, value);
+            dataProcessor.setInt(currentDate + ",steps", value);
 
             // Updating text field and progress bar with the last fixed steps
             tv_Steps.setText(String.valueOf(value));

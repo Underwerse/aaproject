@@ -17,6 +17,8 @@ public class CalendarActivity extends AppCompatActivity {
     private final DataProcessor dataProcessor = new DataProcessor(this);
     private TextView tvSelectedDate;
     private TextView tvCalSteps;
+    private TextView tvCalDreams;
+    private TextView tvCalWater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class CalendarActivity extends AppCompatActivity {
 
         tvSelectedDate = findViewById(R.id.tv_date);
         tvCalSteps = findViewById(R.id.tv_cal_steps);
+        tvCalDreams = findViewById(R.id.tv_cal_dreams);
+        tvCalWater = findViewById(R.id.tv_cal_water);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         updateUI(currentDate);
 
@@ -45,11 +49,22 @@ public class CalendarActivity extends AppCompatActivity {
     }
 
     public void updateUI(String date) {
-        tvSelectedDate.setText(date);
-        Log.i("date", date + ", data: " + String.valueOf(dataProcessor.getInt(date)));
+        tvSelectedDate.setText("Tilasto valittuna pvm:nä: " + date);
 
         tvCalSteps.setText("Äskeltä: ");
-        String updatedSteps = tvCalSteps.getText() + String.valueOf(dataProcessor.getInt(date));
+        String updatedSteps = tvCalSteps.getText() +
+                String.valueOf(dataProcessor.getInt(date +
+                        ",steps"));
         tvCalSteps.setText(updatedSteps);
+        tvCalWater.setText("Vettä juotu: ");
+        String updatedWater = tvCalWater.getText() +
+                String.valueOf(dataProcessor.getInt(date +
+                        ",water"));
+        tvCalWater.setText(updatedWater);
+        tvCalDreams.setText("Uniaika: ");
+        String updatedDreams = tvCalDreams.getText() +
+                String.valueOf(dataProcessor.getInt(date +
+                        ",dreams"));
+        tvCalDreams.setText(updatedDreams);
     }
 }
