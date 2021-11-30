@@ -9,7 +9,7 @@
     tools:context=".MainActivity">
 
     <ProgressBar
-        android:id="@+id/progress_bar"
+        android:id="@+id/pb_steps"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:indeterminateOnly="false"
@@ -23,7 +23,7 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView_Info"
+        android:id="@+id/tv_info_main_1"
         android:layout_width="98dp"
         android:layout_height="30dp"
         android:layout_marginTop="53dp"
@@ -34,11 +34,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar"
+        app:layout_constraintTop_toTopOf="@+id/pb_steps"
         app:layout_constraintVertical_bias="0.157" />
 
     <TextView
-        android:id="@+id/textView_Info2"
+        android:id="@+id/tv_info_main_2"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginBottom="229dp"
@@ -49,19 +49,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/progress_bar"
+        app:layout_constraintTop_toBottomOf="@+id/pb_steps"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textView_Steps"
+        android:id="@+id/tv_main_steps_qty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="0"
         android:textSize="60sp"
-        app:layout_constraintBottom_toBottomOf="@+id/progress_bar"
-        app:layout_constraintEnd_toEndOf="@+id/progress_bar"
-        app:layout_constraintStart_toStartOf="@+id/progress_bar"
-        app:layout_constraintTop_toTopOf="@+id/progress_bar" />
+        app:layout_constraintBottom_toBottomOf="@+id/pb_steps"
+        app:layout_constraintEnd_toEndOf="@+id/pb_steps"
+        app:layout_constraintStart_toStartOf="@+id/pb_steps"
+        app:layout_constraintTop_toTopOf="@+id/pb_steps" />
 
     <Button
         android:id="@+id/btn_calendar"
@@ -75,7 +75,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_Info2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_info_main_2"
         app:layout_constraintVertical_bias="0.100000024" />
 
     <Button

@@ -10,13 +10,25 @@ import android.widget.TextView;
 
 public class WaterActivity extends AppCompatActivity {
 
+    private Button nappiNayta;
+    private Button nappiResetoi;
+    private ImageView getKuva0;
+    private ImageView getKuva1;
+    private ImageView getKuva2;
+    private ImageView getKuva3;
+    private ImageView getKuva4;
+    private ImageView getKuva5;
+    private ImageView getKuva6;
+    private ImageView getKuva7;
+    private ImageView getKuva8;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
 
+
          Button nappiNayta;
-         Button nappiResetoi;
          ImageView getKuva0;
          ImageView getKuva1;
          ImageView getKuva2;
@@ -37,7 +49,6 @@ public class WaterActivity extends AppCompatActivity {
          TextView textML7;
          TextView textML8;
          TextView textML9;
-
 
         getKuva0 = (ImageView) findViewById(R.id.kuva0);
         getKuva1 = (ImageView) findViewById(R.id.kuva1);
@@ -64,9 +75,6 @@ public class WaterActivity extends AppCompatActivity {
 
 
         nappiNayta = (Button) findViewById(R.id.btnPlus);
-
-
-
 
 
         nappiNayta.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +131,6 @@ public class WaterActivity extends AppCompatActivity {
                                                                                 getKuva8.setVisibility(View.INVISIBLE);
                                                                                 textML8.setVisibility(View.INVISIBLE);
                                                                                 textML9.setVisibility(View.VISIBLE);
-
 
                                                                             }
                                                                         });
