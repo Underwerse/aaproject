@@ -1,11 +1,8 @@
 package fi.aa.aaproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CalendarView;
 import android.widget.TextView;
 
@@ -27,7 +24,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         tvSelectedDate = findViewById(R.id.tv_date);
         tvCalSteps = findViewById(R.id.tv_cal_steps);
-        tvCalDreams = findViewById(R.id.tv_cal_dreams);
+        tvCalDreams = findViewById(R.id.tv_cal_sleep);
         tvCalWater = findViewById(R.id.tv_cal_water);
         String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         updateUI(currentDate);
@@ -64,7 +61,7 @@ public class CalendarActivity extends AppCompatActivity {
         tvCalDreams.setText("Uniaika: ");
         String updatedDreams = tvCalDreams.getText() +
                 String.valueOf(dataProcessor.getInt(date +
-                        ",dreams"));
+                        ",sleep"));
         tvCalDreams.setText(updatedDreams);
     }
 }
