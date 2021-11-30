@@ -63,19 +63,18 @@ public class CalendarActivity extends AppCompatActivity {
                 String.valueOf(dataProcessor.getInt(date +
                         ",steps"));
         tvCalSteps.setText(updatedSteps);
-        pbCalSteps.setProgress(dataProcessor.getInt(date + ",steps") / 6);
+        pbCalSteps.setProgress((int) Math.round(dataProcessor.getInt(date + ",steps") / 6.0));
         tvCalWater.setText("Vettä juotu: ");
         String updatedWater = tvCalWater.getText() +
                 String.valueOf(dataProcessor.getInt(date +
                         ",water"));
         tvCalWater.setText(updatedWater);
-        DecimalFormat decimalFormat = new DecimalFormat( "#" );
-        String result = decimalFormat.format(value);
-        pbCalWater.setProgress(dataProcessor.getInt(date + ",water") / 22.5);
+        pbCalWater.setProgress((int) Math.round(dataProcessor.getInt(date + ",water") / 22.5));
         tvCalDreams.setText("Uniaika: ");
         String updatedDreams = tvCalDreams.getText() +
                 String.valueOf(dataProcessor.getInt(date +
                         ",sleep"));
+        pbCalSleep.setProgress((int) Math.round(100* dataProcessor.getInt(date + ",sleep") / 8.0));
         tvCalDreams.setText(updatedDreams);
 
 
