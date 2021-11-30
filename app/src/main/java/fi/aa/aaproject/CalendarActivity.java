@@ -67,13 +67,15 @@ public class CalendarActivity extends AppCompatActivity {
         tvCalWater.setText("Vettä juotu: ");
         String updatedWater = tvCalWater.getText() +
                 String.valueOf(dataProcessor.getInt(date +
-                        ",water"));
+                        ",water")) +
+                " ml";
         tvCalWater.setText(updatedWater);
         pbCalWater.setProgress((int) Math.round(dataProcessor.getInt(date + ",water") / 22.5));
         tvCalDreams.setText("Uniaika: ");
         String updatedDreams = tvCalDreams.getText() +
                 String.valueOf(dataProcessor.getInt(date +
-                        ",sleep"));
+                        ",sleep")) +
+                " t.";
         pbCalSleep.setProgress((int) Math.round(100* dataProcessor.getInt(date + ",sleep") / 8.0));
         tvCalDreams.setText(updatedDreams);
 
