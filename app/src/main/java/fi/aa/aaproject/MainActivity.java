@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //    private SharedPreferences sharedPreferences;
     DataProcessor dataProcessor = new DataProcessor(this);
     private final int ACTIVITY_RECOGNITION_CODE = 1;
+    private String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
     // More activities buttons initiation
     private Button btnCalendar;
@@ -65,12 +66,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         btnSleep = findViewById(R.id.btn_sleep);
         btnWater = findViewById(R.id.btn_water);
 
-        // Today's date variable creation
-        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
-
-//        sharedPreferences = this.getSharedPreferences("fi.aa.aaproject", Context.MODE_PRIVATE);
-//        SharedPreferences.Editor ed;
-
         // Check if device has steps counter sensor or not
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
@@ -85,8 +80,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if (dataProcessor.prefExists(currentDate)) {
             int v = dataProcessor.getInt(currentDate);
             tv_Steps.setText(String.valueOf(v));
+
+            // For the test purposes value has been set to 70:
 //            stepsProgressBar.setProgress( 100 * v / this.stepsTarget );
             stepsProgressBar.setProgress(70);
+
+            // Main steps ProgressBar animation
+            ProgressBarAnimation pbMainStepsAnim = new ProgressBarAnimation(stepsProgressBar, 0, 70);
+            pbMainStepsAnim.setDuration(1000);
+            stepsProgressBar.startAnimation(pbMainStepsAnim);
         }
 
         // Check if user granted device activity permission or not
@@ -126,17 +128,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         });
 
         // Testing data saving
-        dataProcessor.setInt("28.11.2021" + ",steps", 555);
-        dataProcessor.setInt("28.11.2021" + ",sleep", 8);
-        dataProcessor.setInt("28.11.2021" + ",water", 1200);
-        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
-        dataProcessor.setInt("27.11.2021" + ",sleep", 5);
-        dataProcessor.setInt("27.11.2021" + ",water", 900);
+//        dataProcessor.setInt("28.11.2021" + ",steps", 555);
+//        dataProcessor.setInt("28.11.2021" + ",sleep", 8);
+//        dataProcessor.setInt("28.11.2021" + ",water", 1200);
+//        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
+//        dataProcessor.setInt("27.11.2021" + ",sleep", 5);
+//        dataProcessor.setInt("27.11.2021" + ",water", 900);
     }
 
     // Defining methods for opening the activities
     public void openCalendarActivity() {
         Intent intent = new Intent(this, CalendarActivity.class);
+        intent.putExtra("stepsTarget", this.stepsTarget);
         startActivity(intent);
     }
 
@@ -192,7 +195,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // Steps counter detection processing
     @Override
     public void onSensorChanged(SensorEvent event) {
-        String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
         if (dataProcessor.prefExists(currentDate)) {
             int value = dataProcessor.getInt(currentDate);
             value += 1;
