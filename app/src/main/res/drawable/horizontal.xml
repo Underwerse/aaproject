@@ -1,33 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/background">
-        <shape android:shape="line">
-            <stroke
-                android:width="3dp"
-                android:color="#FFDDAA"
-                android:dashWidth="20dp"
-                android:dashGap="7dp" />
+    <item android:id="@android:id/background">
+        <shape>
+            <corners android:radius="5dp"/>
+            <solid android:color="#fff"/>
         </shape>
     </item>
 
-    <item android:id="@+id/progress">
-        <clip
-            android:clipOrientation="horizontal"
-            android:gravity="start">
-            <shape android:shape="line">
-                <stroke
-                    android:width="3dp"
-                    android:color="#2299FF"
-                    android:dashWidth="21dp"
-                    android:dashGap="7dp">
-                </stroke>
-                <gradient
-                    android:centerColor="#FFEB3B"
-                    android:endColor="#00BCD4"
-                    android:startColor="#FF5722"
-                    android:type="sweep"
-                    android:useLevel="true" />
-            </shape>
-        </clip>
+    <item android:id="@android:id/progress">
+        <shape>
+            <corners android:radius="5dp"/>
+            <gradient
+                android:endColor="#10A600"
+                android:startColor="@android:color/holo_orange_light"
+                />
+        </shape>
     </item>
 </layer-list>
