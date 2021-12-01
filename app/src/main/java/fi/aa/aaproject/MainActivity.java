@@ -29,26 +29,17 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener
 {
-    // Defining all the variables
-    // Android sensor (for steps activity following) initiation
-    private SensorManager sensorManager;
     private TextView tv_Steps;
     private ProgressBar stepsProgressBar;
-    private Sensor countSensor;
-
-    // Max day steps qty
     private int stepsTarget = 600;
+    private StepsCounter stepsCounter;
 
     // Saving day-steps preferences into default Android DB initiation
-//    private SharedPreferences sharedPreferences;
+    // private SharedPreferences sharedPreferences;
     DataProcessor dataProcessor = new DataProcessor(this);
     private final int ACTIVITY_RECOGNITION_CODE = 1;
-    private String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
+    private final String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
-    // More activities buttons initiation
-    private Button btnCalendar;
-    private Button btnSleep;
-    private Button btnWater;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -57,39 +48,43 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Current all the Main activity's variables
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
+        // Current Main activity's variables
+        // Defining all the variables
+        // Android sensor (for steps activity following) initiation
+        SensorManager sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         tv_Steps = findViewById(R.id.tv_main_steps_qty);
         stepsProgressBar = findViewById(R.id.pb_steps);
-        btnCalendar = findViewById(R.id.btn_calendar);
-        btnSleep = findViewById(R.id.btn_sleep);
-        btnWater = findViewById(R.id.btn_water);
+
+        stepsCounter = new StepsCounter(dataProcessor.getInt(currentDate + ",steps"));
+        Log.i("steps counter", String.valueOf(stepsCounter.getCounter()));
+
+        // More activities buttons initiation
+        Button btnCalendar = findViewById(R.id.btn_calendar);
+        Button btnSleep = findViewById(R.id.btn_sleep);
+        Button btnWater = findViewById(R.id.btn_water);
 
         // Check if device has steps counter sensor or not
         if (countSensor != null) {
             sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+            Toast.makeText(this, "Steps sensor has been found", Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
         }
 
-        // Check if there is saved steps data in the local DB or not
-        if (!dataProcessor.prefExists(currentDate)) {
-            dataProcessor.setInt(currentDate, 0);
-        }
-        if (dataProcessor.prefExists(currentDate)) {
-            int v = dataProcessor.getInt(currentDate);
+        int v = stepsCounter.getCounter();
+            Log.i("steps start", String.valueOf(v));
             tv_Steps.setText(String.valueOf(v));
 
             // For the test purposes value has been set to 70:
-//            stepsProgressBar.setProgress( 100 * v / this.stepsTarget );
-            stepsProgressBar.setProgress(70);
+    //            stepsProgressBar.setProgress(70);
+        stepsProgressBar.setProgress( 100 * v / stepsTarget );
 
             // Main steps ProgressBar animation
-            ProgressBarAnimation pbMainStepsAnim = new ProgressBarAnimation(stepsProgressBar, 0, 70);
+            ProgressBarAnimation pbMainStepsAnim = new ProgressBarAnimation(stepsProgressBar, 0, 100 * v / stepsTarget);
             pbMainStepsAnim.setDuration(1000);
             stepsProgressBar.startAnimation(pbMainStepsAnim);
-        }
+//        }
 
         // Check if user granted device activity permission or not
         if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
@@ -138,8 +133,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     // Defining methods for opening the activities
     public void openCalendarActivity() {
+
         Intent intent = new Intent(this, CalendarActivity.class);
-        intent.putExtra("stepsTarget", this.stepsTarget);
+        // Max day steps qty
+        intent.putExtra("stepsTarget", stepsTarget);
         startActivity(intent);
     }
 
@@ -195,19 +192,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     // Steps counter detection processing
     @Override
     public void onSensorChanged(SensorEvent event) {
-        if (dataProcessor.prefExists(currentDate)) {
-            int value = dataProcessor.getInt(currentDate);
-            value += 1;
+        int v = stepsCounter.getCounter();
+        Log.i("steps before", String.valueOf(stepsCounter.getCounter()));
+        stepsCounter.plusValue();
 
-            // Record updated steps data into local Android DB
-            dataProcessor.setInt(currentDate + ",steps", value);
+        // Record updated steps data into local Android DB
+        dataProcessor.setInt(currentDate + ",steps", v);
 
-            // Updating text field and progress bar with the last fixed steps
-            tv_Steps.setText(String.valueOf(value));
-//            stepsProgressBar.setProgress( 100 * value / this.stepsTarget);
-            stepsProgressBar.setProgress(70);
-
-        }
+        // Updating text field and progress bar with the last fixed steps
+        Log.i("steps", String.valueOf(v));
+        tv_Steps.setText(String.valueOf(v));
+        stepsProgressBar.setProgress( 100 * v / stepsTarget);
     }
 
     @Override

@@ -48,12 +48,22 @@ public class CalendarActivity extends AppCompatActivity {
             int mYear = year;
             int mMonth = month + 1;
             int mDay = dayOfMonth;
-            String selectedDate = "" +
-                    mDay +
-                    "." +
-                    mMonth +
-                    "." +
-                    mYear;
+            String selectedDate;
+            if (String.valueOf(mDay).length() == 1) {
+                selectedDate = "0" +
+                        mDay +
+                        "." +
+                        mMonth +
+                        "." +
+                        mYear;
+            } else {
+                selectedDate = "" +
+                        mDay +
+                        "." +
+                        mMonth +
+                        "." +
+                        mYear;
+            }
 
             updateUI(selectedDate);
         });
