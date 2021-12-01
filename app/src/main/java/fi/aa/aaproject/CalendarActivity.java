@@ -64,7 +64,7 @@ public class CalendarActivity extends AppCompatActivity {
 
         //******************** STEPS *********************
         // TextView field:
-        tvCalSteps.setText("Äskeltä: ");
+        tvCalSteps.setText("Askelta: ");
         String updatedSteps = tvCalSteps.getText() +
                 String.valueOf(dataProcessor.getInt(date +
                         ",steps"));
