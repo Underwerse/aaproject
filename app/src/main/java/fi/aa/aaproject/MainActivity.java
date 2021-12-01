@@ -27,11 +27,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener
+public class MainActivity extends AppCompatActivity implements SensorEventListener, StepsTargetDialog.StepsTargetDialogListener
 {
     private TextView tv_Steps;
+    private TextView tvStepsTarget;
     private ProgressBar stepsProgressBar;
-    private int stepsTarget = 600;
+    private int stepsTarget;
     private StepsCounter stepsCounter;
 
     // Saving day-steps preferences into default Android DB initiation
@@ -40,11 +41,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private final int ACTIVITY_RECOGNITION_CODE = 1;
     private final String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
-        // Initial methods
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -55,9 +54,15 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Sensor countSensor = sensorManager.getDefaultSensor(Sensor.TYPE_STEP_COUNTER);
         tv_Steps = findViewById(R.id.tv_main_steps_qty);
         stepsProgressBar = findViewById(R.id.pb_steps);
+        tvStepsTarget = findViewById(R.id.tv_info_main_2);
 
-        stepsCounter = new StepsCounter(dataProcessor.getInt(currentDate + ",steps"));
-        Log.i("steps counter", String.valueOf(stepsCounter.getCounter()));
+        tvStepsTarget.setOnClickListener(v -> {
+            openDialog();
+        });
+
+        stepsCounter = new StepsCounter(dataProcessor.getInt(currentDate + ",steps"),
+                dataProcessor.getInt("steps target"));
+        stepsTarget = stepsCounter.getStepsTarget();
 
         // More activities buttons initiation
         Button btnCalendar = findViewById(R.id.btn_calendar);
@@ -65,34 +70,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button btnWater = findViewById(R.id.btn_water);
 
         // Check if device has steps counter sensor or not
-        if (countSensor != null) {
-            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
-            Toast.makeText(this, "Steps sensor has been found", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
-        }
+        checkIfDeviceHasStepsSensor(sensorManager, countSensor);
 
-        int v = stepsCounter.getCounter();
-            Log.i("steps start", String.valueOf(v));
-            tv_Steps.setText(String.valueOf(v));
-
-            // For the test purposes value has been set to 70:
-    //            stepsProgressBar.setProgress(70);
-        stepsProgressBar.setProgress( 100 * v / stepsTarget );
-
-            // Main steps ProgressBar animation
-            ProgressBarAnimation pbMainStepsAnim = new ProgressBarAnimation(stepsProgressBar, 0, 100 * v / stepsTarget);
-            pbMainStepsAnim.setDuration(1000);
-            stepsProgressBar.startAnimation(pbMainStepsAnim);
-//        }
+        setCurrentStepsQtyFromDb();
 
         // Check if user granted device activity permission or not
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
-        } else {
-            // Request needed permission method
-            requestActivityPermission();
-        }
+        checkIfActivityPermissionGranted();
 
         // Setting onClickListeners to buttons for moving into another activities
         btnCalendar.setOnClickListener(new View.OnClickListener() {
@@ -129,6 +112,56 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
 //        dataProcessor.setInt("27.11.2021" + ",sleep", 5);
 //        dataProcessor.setInt("27.11.2021" + ",water", 900);
+    }
+
+    @Override
+    public void applyStepsTargetQty(int stepsTargetQty) {
+        setStepsTarget(stepsTargetQty);
+//        tvStepsTarget.setText("Tavoiteltu askelmäärä: " + stepsCounter.getStepsTarget());
+        dataProcessor.setInt("steps target", stepsTargetQty);
+        setCurrentStepsQtyFromDb();
+    }
+
+    public void openDialog() {
+        StepsTargetDialog stepsTargetDialog = new StepsTargetDialog();
+        stepsTargetDialog.show(getSupportFragmentManager(), "steps target dialog");
+    }
+
+    public void setCurrentStepsQtyFromDb() {
+        int v = stepsCounter.getCounter();
+        tv_Steps.setText(String.valueOf(v));
+
+        stepsTarget = stepsCounter.getStepsTarget();
+        tvStepsTarget.setText("Tavoiteltu askelmäärä: " + stepsTarget);
+
+        stepsProgressBar.setProgress( 100 * v / stepsTarget );
+
+        // Main steps ProgressBar animation
+        ProgressBarAnimation pbMainStepsAnim = new ProgressBarAnimation(stepsProgressBar, 0, 100 * v / stepsTarget);
+        pbMainStepsAnim.setDuration(1000);
+        stepsProgressBar.startAnimation(pbMainStepsAnim);
+    }
+
+    public void checkIfActivityPermissionGranted() {
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
+//            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
+        } else {
+            // Request needed permission method
+            requestActivityPermission();
+        }
+    }
+
+    public void checkIfDeviceHasStepsSensor(SensorManager sensorManager, Sensor countSensor) {
+        if (countSensor != null) {
+            sensorManager.registerListener(this, countSensor, SensorManager.SENSOR_DELAY_UI);
+//            Toast.makeText(this, "Steps sensor has been found", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Sensor not found", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void setStepsTarget(int stepsTargetQty) {
+        this.stepsCounter.setStepsTarget(stepsTargetQty);
     }
 
     // Defining methods for opening the activities
