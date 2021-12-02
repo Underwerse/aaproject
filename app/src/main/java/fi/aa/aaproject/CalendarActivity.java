@@ -81,7 +81,7 @@ public class CalendarActivity extends AppCompatActivity {
         tvCalSteps.setText(updatedSteps);
 
         // ProgressBar:
-        int stepsCurrentProgress = (int) Math.round(100 * dataProcessor.getInt(date + ",steps") / (float) stepsTarget);
+        int stepsCurrentProgress = Math.round(100 * dataProcessor.getInt(date + ",steps") / (float) stepsTarget);
         pbCalSteps.setProgress(stepsCurrentProgress);
 
         // ProgressBar animation:

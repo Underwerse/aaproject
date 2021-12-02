@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -17,7 +16,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     // Saving day-steps preferences into default Android DB initiation
     // private SharedPreferences sharedPreferences;
-    DataProcessor dataProcessor = new DataProcessor(this);
+    private final DataProcessor dataProcessor = new DataProcessor(this);
     private final int ACTIVITY_RECOGNITION_CODE = 1;
     private final String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
@@ -56,9 +54,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stepsProgressBar = findViewById(R.id.pb_steps);
         tvStepsTarget = findViewById(R.id.tv_info_main_2);
 
-        tvStepsTarget.setOnClickListener(v -> {
-            openDialog();
-        });
+        tvStepsTarget.setOnClickListener(v -> openDialog());
 
         stepsCounter = new StepsCounter(dataProcessor.getInt(currentDate + ",steps"),
                 dataProcessor.getInt("steps target"));
@@ -78,32 +74,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         checkIfActivityPermissionGranted();
 
         // Setting onClickListeners to buttons for moving into another activities
-        btnCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openCalendarActivity();
-            }
+        btnCalendar.setOnClickListener(v -> openCalendarActivity());
+
+        btnSleep.setOnClickListener(v -> {
+            openSleepActivity();
+
+            // Test case for sharedPrefs
+            String yesterdayDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(System.currentTimeMillis()-24*60*60*1000));
+            dataProcessor.setInt(yesterdayDate, 555);
+            Log.i("today", String.valueOf(dataProcessor.getInt(currentDate)));
+            Log.i("yesterday", String.valueOf(dataProcessor.getInt(yesterdayDate)));
         });
 
-        btnSleep.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openSleepActivity();
-
-                // Test case for sharedPrefs
-                String yesterdayDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(System.currentTimeMillis()-24*60*60*1000));
-                dataProcessor.setInt(yesterdayDate, 555);
-                Log.i("today", String.valueOf(dataProcessor.getInt(currentDate)));
-                Log.i("yesterday", String.valueOf(dataProcessor.getInt(yesterdayDate)));
-            }
-        });
-
-        btnWater.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openWaterActivity();
-            }
-        });
+        btnWater.setOnClickListener(v -> openWaterActivity());
 
         // Testing data saving
 //        dataProcessor.setInt("28.11.2021" + ",steps", 555);
@@ -143,10 +126,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     public void checkIfActivityPermissionGranted() {
-        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) == PackageManager.PERMISSION_GRANTED) {
-//            Toast.makeText(MainActivity.this, "You have already granted this permission", Toast.LENGTH_SHORT).show();
-        } else {
-            // Request needed permission method
+        if (ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.ACTIVITY_RECOGNITION) != PackageManager.PERMISSION_GRANTED) {
             requestActivityPermission();
         }
     }
@@ -191,18 +171,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             new AlertDialog.Builder(this)
                     .setTitle("Permission denied")
                     .setMessage("This permission is needed for recording your activity")
-                    .setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACTIVITY_RECOGNITION}, ACTIVITY_RECOGNITION_CODE);
-                        }
-                    })
-                    .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
+                    .setPositiveButton("ok", (dialog, which) -> ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACTIVITY_RECOGNITION}, ACTIVITY_RECOGNITION_CODE))
+                    .setNegativeButton("cancel", (dialog, which) -> dialog.dismiss())
                     .create().show();
         } else {
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACTIVITY_RECOGNITION}, ACTIVITY_RECOGNITION_CODE);
