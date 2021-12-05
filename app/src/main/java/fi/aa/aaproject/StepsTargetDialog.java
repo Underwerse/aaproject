@@ -26,7 +26,7 @@ public class StepsTargetDialog extends AppCompatDialogFragment {
         View view = inflater.inflate(R.layout.layout_dialog, null);
 
         builder.setView(view)
-                .setTitle("Tavoiteltu askelmäärä")
+                .setTitle("Tavoiteltu askelmäärän asetus")
                 .setNegativeButton("Peru", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

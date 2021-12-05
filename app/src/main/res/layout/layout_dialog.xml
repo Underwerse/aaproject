@@ -12,10 +12,8 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:hint="Tavoiteltu askelmäärä"
+        android:hint="Laittakaa kokonaisluvun"
         android:inputType="number"
-        android:textSize="24sp" />
-
-
+        android:textSize="16sp" />
 
 </RelativeLayout>

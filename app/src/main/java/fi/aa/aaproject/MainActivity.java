@@ -100,7 +100,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void applyStepsTargetQty(int stepsTargetQty) {
         setStepsTarget(stepsTargetQty);
-//        tvStepsTarget.setText("Tavoiteltu askelmäärä: " + stepsCounter.getStepsTarget());
         dataProcessor.setInt("steps target", stepsTargetQty);
         setCurrentStepsQtyFromDb();
     }

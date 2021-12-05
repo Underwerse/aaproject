@@ -69,6 +69,10 @@ public class CalendarActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Function updates TextViews and ProgressBars in according to changed data
+     * @param date date in set format
+     */
     public void updateUI(String date) {
         tvSelectedDate.setText("Tilasto valittuna pvm:nä: " + date);
 
