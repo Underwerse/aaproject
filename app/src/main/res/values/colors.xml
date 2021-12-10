@@ -10,4 +10,6 @@
     <color name="circleBgr">#8CA5FF</color>
     <color name="circleCurrent">#0034F1</color>
     <color name="projectvari">#50B8B2</color>
+    <color name="bgrSplash">#0057C3</color>
+    <color name="splashText">#48cd5f</color>
 </resources>
