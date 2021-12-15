@@ -7,13 +7,16 @@
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/horizontal.xml" value="0.23020833333333332" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/pb_sleep_activity.xml" value="0.1" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/progress_sleep.xml" value="0.3277777777777778" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/progress_water.xml" value="0.3277777777777778" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/progressvesi.xml" value="0.3277777777777778" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/vertical.xml" value="0.390625" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/vertical_progress_bar.xml" value="0.3104166666666667" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_calendar.xml" value="0.4" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_sleep.xml" value="0.264" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_splash.xml" value="0.27239583333333334" />
-        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_water.xml" value="0.2" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_water.xml" value="0.264" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/fragment_steps_setter.xml" value="0.2828125" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/layout_dialog.xml" value="0.4" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.28854166666666664" />

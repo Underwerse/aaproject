@@ -8,7 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="circleBgr">#8CA5FF</color>
-    <color name="circleCurrent">#0034F1</color>
+    <color name="pbWaterColor">#0034F1</color>
+    <color name="pbWaterBgrColor">#0034F1</color>
+    <color name="pbSleepColor">#00F328</color>
+    <color name="pbSleepBgrColor">#B0F6FF</color>
     <color name="projectvari">#50B8B2</color>
     <color name="bgrSplash">#0057C3</color>
     <color name="splashText">#48cd5f</color>

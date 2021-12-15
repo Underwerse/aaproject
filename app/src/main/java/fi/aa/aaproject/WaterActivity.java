@@ -4,13 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -42,33 +39,33 @@ public class WaterActivity extends AppCompatActivity {
         nappi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (progress <=90){
+                if (progress <=90) {
                     progress += 10;
-                    vesimaara += 250;
-                    teksti1.setText(vesimaara +" ML");
-                    dataProsessori.setInt(currentDate +",water",vesimaara);
-                    updateProgress();
                 }
+                vesimaara += 250;
+                teksti1.setText(vesimaara +" ML");
+                dataProsessori.setInt(currentDate +",water",vesimaara);
+                updateProgress();
             }
         });
         nappi2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (progress >= 10){
-                    progress -= 10;
-                    vesimaara -= 250;
-                    teksti1.setText(vesimaara +" ML");
-                    dataProsessori.setInt(currentDate +",water",vesimaara);
-                    updateProgress();
-
+                if (progress >= 10) {
+                        progress -= 10;
                 }
+                vesimaara -= 250;
+                teksti1.setText(vesimaara +" ML");
+                dataProsessori.setInt(currentDate +",water",vesimaara);
+                updateProgress();
+
             }
         });
 
     }
 
     private void updateProgress(){
-        ProgressBar lasi = (ProgressBar) findViewById(R.id.progressBar);
+        ProgressBar lasi = (ProgressBar) findViewById(R.id.pb_water);
         vesimaara = dataProsessori.getInt(currentDate + ",water");
         progress = vesimaara / 25;
         lasi.setProgress(progress);
