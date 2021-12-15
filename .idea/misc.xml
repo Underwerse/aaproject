@@ -5,14 +5,15 @@
       <map>
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/circle.xml" value="0.1875" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/horizontal.xml" value="0.23020833333333332" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/ic_launcher_background.xml" value="0.25364583333333335" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/pb_sleep_activity.xml" value="0.1" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/vertical.xml" value="0.390625" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/drawable/vertical_progress_bar.xml" value="0.3104166666666667" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_calendar.xml" value="0.4" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_main.xml" value="0.264" />
-        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_sleep.xml" value="0.2" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_sleep.xml" value="0.264" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_splash.xml" value="0.27239583333333334" />
-        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_water.xml" value="0.4" />
+        <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/activity_water.xml" value="0.2" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/fragment_steps_setter.xml" value="0.2828125" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/layout/layout_dialog.xml" value="0.4" />
         <entry key="..\:/Users/Underwerse/AndroidStudioProjects/aaproject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.28854166666666664" />
@@ -20,7 +21,17 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$" />
+  </component>
+  <component name="JavadocGenerationManager">
+    <option name="OUTPUT_DIRECTORY" value="D:/Docs/___Soumi_opis/Metropolia/Opiskelu/2. Mobiilit_terveyssovellukset/___Projekti/JavaDoc" />
+    <option name="OPTION_SCOPE" value="private" />
+    <option name="OPTION_DOCUMENT_TAG_DEPRECATED" value="false" />
+    <option name="OPEN_IN_BROWSER" value="false" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -24,11 +24,6 @@ public class WaterActivity extends AppCompatActivity {
     private int progress = 0;
     private int vesimaara = 0;
 
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

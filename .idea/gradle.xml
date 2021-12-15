@@ -7,10 +7,40 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="gradleJvm" value="11" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/annotation" />
+            <option value="$PROJECT_DIR$/annotation/compiler" />
+            <option value="$PROJECT_DIR$/annotation/compiler/test" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/benchmark" />
+            <option value="$PROJECT_DIR$/glide" />
+            <option value="$PROJECT_DIR$/instrumentation" />
+            <option value="$PROJECT_DIR$/integration" />
+            <option value="$PROJECT_DIR$/integration/concurrent" />
+            <option value="$PROJECT_DIR$/integration/cronet" />
+            <option value="$PROJECT_DIR$/integration/gifencoder" />
+            <option value="$PROJECT_DIR$/integration/okhttp" />
+            <option value="$PROJECT_DIR$/integration/okhttp3" />
+            <option value="$PROJECT_DIR$/integration/recyclerview" />
+            <option value="$PROJECT_DIR$/integration/volley" />
+            <option value="$PROJECT_DIR$/library" />
+            <option value="$PROJECT_DIR$/library/pmd" />
+            <option value="$PROJECT_DIR$/library/test" />
+            <option value="$PROJECT_DIR$/mocks" />
+            <option value="$PROJECT_DIR$/samples" />
+            <option value="$PROJECT_DIR$/samples/contacturi" />
+            <option value="$PROJECT_DIR$/samples/flickr" />
+            <option value="$PROJECT_DIR$/samples/gallery" />
+            <option value="$PROJECT_DIR$/samples/giphy" />
+            <option value="$PROJECT_DIR$/samples/imgur" />
+            <option value="$PROJECT_DIR$/samples/svg" />
+            <option value="$PROJECT_DIR$/testutil" />
+            <option value="$PROJECT_DIR$/third_party" />
+            <option value="$PROJECT_DIR$/third_party/disklrucache" />
+            <option value="$PROJECT_DIR$/third_party/gif_decoder" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

@@ -42,16 +42,13 @@ public class SleepActivity extends AppCompatActivity {
         nappi2 = (Button) findViewById(R.id.nappi2);
         teksti1 = (TextView) findViewById(R.id.unenMaara);
 
-        nappi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progress <=90){
-                    progress += 10;
-                    unenmaara += 1;
-                    teksti1.setText(unenmaara +" H");
-                    dataProsessori.setInt(currentDate +",sleep",unenmaara);
-                    updateProgress();
-                }
+        nappi.setOnClickListener(v -> {
+            if (progress <=90){
+                progress += 10;
+                unenmaara += 1;
+                teksti1.setText(unenmaara +" H");
+                dataProsessori.setInt(currentDate +",sleep",unenmaara);
+                updateProgress();
             }
         });
 
