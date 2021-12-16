@@ -54,7 +54,9 @@ public class WaterActivity extends AppCompatActivity {
                 if (progress >= 10) {
                         progress -= 10;
                 }
-                vesimaara -= 250;
+                if (vesimaara >= 250) {
+                    vesimaara -= 250;
+                }
                 teksti1.setText(vesimaara +" ML");
                 dataProsessori.setInt(currentDate +",water",vesimaara);
                 updateProgress();

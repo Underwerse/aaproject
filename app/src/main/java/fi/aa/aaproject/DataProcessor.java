@@ -27,7 +27,7 @@ public class DataProcessor {
 
     public int getInt(String key) {
         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        return prefs.getInt(key, 1);
+        return prefs.getInt(key, 0);
     }
 
     public boolean getBool(String key) {

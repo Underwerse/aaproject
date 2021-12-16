@@ -55,7 +55,9 @@ public class SleepActivity extends AppCompatActivity {
                 if (progress >= 10) {
                     progress -= 10;
                 }
-                unenmaara -= 1;
+                if (unenmaara >= 1) {
+                    unenmaara -= 1;
+                }
                 teksti1.setText(unenmaara +" H");
                 dataProsessori.setInt(currentDate +",sleep",unenmaara);
                 updateProgress();
