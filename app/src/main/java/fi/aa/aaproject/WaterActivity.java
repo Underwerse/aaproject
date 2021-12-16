@@ -1,14 +1,11 @@
 package fi.aa.aaproject;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -27,7 +24,7 @@ public class WaterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_water);
-        dataProsessori = new DataProcessor(this  );
+        dataProsessori = DataProcessor.getInstance(this  );
         currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
         nappi = (Button) findViewById(R.id.nappi);
@@ -36,32 +33,26 @@ public class WaterActivity extends AppCompatActivity {
 
         updateProgress();
 
-        nappi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progress <=90) {
-                    progress += 10;
-                }
-                vesimaara += 250;
-                teksti1.setText(vesimaara +" ML");
-                dataProsessori.setInt(currentDate +",water",vesimaara);
-                updateProgress();
+        nappi.setOnClickListener(v -> {
+            if (progress <=90) {
+                progress += 10;
             }
+            vesimaara += 250;
+            teksti1.setText(vesimaara +" ML");
+            dataProsessori.setInt(currentDate +",water",vesimaara);
+            updateProgress();
         });
-        nappi2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (progress >= 10) {
-                        progress -= 10;
-                }
-                if (vesimaara >= 250) {
-                    vesimaara -= 250;
-                }
-                teksti1.setText(vesimaara +" ML");
-                dataProsessori.setInt(currentDate +",water",vesimaara);
-                updateProgress();
-
+        nappi2.setOnClickListener(v -> {
+            if (progress >= 10) {
+                    progress -= 10;
             }
+            if (vesimaara >= 250) {
+                vesimaara -= 250;
+            }
+            teksti1.setText(vesimaara +" ML");
+            dataProsessori.setInt(currentDate +",water",vesimaara);
+            updateProgress();
+
         });
 
     }
@@ -74,25 +65,4 @@ public class WaterActivity extends AppCompatActivity {
         teksti1.setText(String.valueOf(vesimaara) +" ML");
 
     }
-
-
-
-
-
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        String stateSaved = savedInstanceState.getString("saved_state:");
-
-
-        }
-
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        savedInstanceState.putString("saved_state:", "aaa");
-
-    }
-
 }

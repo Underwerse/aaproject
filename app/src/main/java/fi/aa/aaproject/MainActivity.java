@@ -5,7 +5,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -35,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     // Saving day-steps preferences into default Android DB initiation
     // private SharedPreferences sharedPreferences;
-    private final DataProcessor dataProcessor = new DataProcessor(this);
     private final int ACTIVITY_RECOGNITION_CODE = 1;
     private final String currentDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date());
 
@@ -56,8 +53,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         tvStepsTarget.setOnClickListener(v -> openDialog());
 
-        stepsCounter = new StepsCounter(dataProcessor.getInt(currentDate + ",steps"),
-                dataProcessor.getInt("steps target"));
+        stepsCounter = new StepsCounter(DataProcessor.getInstance(this).getInt(currentDate + ",steps"),
+                DataProcessor.getInstance(this).getInt("steps target"));
         stepsTarget = stepsCounter.getStepsTarget();
 
         // More activities buttons initiation
@@ -81,26 +78,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             // Test case for sharedPrefs
             String yesterdayDate = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault()).format(new Date(System.currentTimeMillis()-24*60*60*1000));
-            dataProcessor.setInt(yesterdayDate, 555);
-            Log.i("today", String.valueOf(dataProcessor.getInt(currentDate)));
-            Log.i("yesterday", String.valueOf(dataProcessor.getInt(yesterdayDate)));
+            DataProcessor.getInstance(this).setInt(yesterdayDate, 555);
+            Log.i("today", String.valueOf(DataProcessor.getInstance(this).getInt(currentDate)));
+            Log.i("yesterday", String.valueOf(DataProcessor.getInstance(this).getInt(yesterdayDate)));
         });
 
         btnWater.setOnClickListener(v -> openWaterActivity());
-
-        // Testing data saving
-//        dataProcessor.setInt("28.11.2021" + ",steps", 555);
-//        dataProcessor.setInt("28.11.2021" + ",sleep", 8);
-//        dataProcessor.setInt("28.11.2021" + ",water", 1200);
-//        dataProcessor.setInt("27.11.2021" + ",steps", 1300);
-//        dataProcessor.setInt("27.11.2021" + ",sleep", 5);
-//        dataProcessor.setInt("27.11.2021" + ",water", 900);
     }
 
     @Override
     public void applyStepsTargetQty(int stepsTargetQty) {
         setStepsTarget(stepsTargetQty);
-        dataProcessor.setInt("steps target", stepsTargetQty);
+        DataProcessor.getInstance(this).setInt("steps target", stepsTargetQty);
         setCurrentStepsQtyFromDb();
     }
 
@@ -199,7 +188,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         stepsCounter.plusValue();
 
         // Record updated steps data into local Android DB
-        dataProcessor.setInt(currentDate + ",steps", v);
+        DataProcessor.getInstance(this).setInt(currentDate + ",steps", v);
 
         // Updating text field and progress bar with the last fixed steps
         Log.i("steps", String.valueOf(v));

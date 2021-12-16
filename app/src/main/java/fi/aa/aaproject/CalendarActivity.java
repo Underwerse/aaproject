@@ -1,19 +1,16 @@
 package fi.aa.aaproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 public class CalendarActivity extends AppCompatActivity {
-    private final DataProcessor dataProcessor = new DataProcessor(this);
     private TextView tvSelectedDate;
     private TextView tvCalSteps;
     private TextView tvCalDreams;
@@ -80,12 +77,12 @@ public class CalendarActivity extends AppCompatActivity {
         // TextView field:
         tvCalSteps.setText("Askelta: ");
         String updatedSteps = tvCalSteps.getText() +
-                String.valueOf(dataProcessor.getInt(date +
+                String.valueOf(DataProcessor.getInstance(this).getInt(date +
                         ",steps"));
         tvCalSteps.setText(updatedSteps);
 
         // ProgressBar:
-        int stepsCurrentProgress = Math.round(100 * dataProcessor.getInt(date + ",steps") / (float) stepsTarget);
+        int stepsCurrentProgress = Math.round(100 * DataProcessor.getInstance(this).getInt(date + ",steps") / (float) stepsTarget);
         pbCalSteps.setProgress(stepsCurrentProgress);
 
         // ProgressBar animation:
@@ -97,13 +94,13 @@ public class CalendarActivity extends AppCompatActivity {
         // TextView field:
         tvCalWater.setText("Vettä juotu: ");
         String updatedWater = tvCalWater.getText() +
-                String.valueOf(dataProcessor.getInt(date +
+                String.valueOf(DataProcessor.getInstance(this).getInt(date +
                         ",water")) +
                 " ml";
         tvCalWater.setText(updatedWater);
 
         // ProgressBar:
-        int waterCurrentProgress = (int) Math.round(dataProcessor.getInt(date + ",water") / 22.5);
+        int waterCurrentProgress = (int) Math.round(DataProcessor.getInstance(this).getInt(date + ",water") / 22.5);
         pbCalWater.setProgress(waterCurrentProgress);
 
         // ProgressBar animation:
@@ -115,12 +112,12 @@ public class CalendarActivity extends AppCompatActivity {
         // TextView field:
         tvCalDreams.setText("Uniaika: ");
         String updatedDreams = tvCalDreams.getText() +
-                String.valueOf(dataProcessor.getInt(date +
+                String.valueOf(DataProcessor.getInstance(this).getInt(date +
                         ",sleep")) +
                 " t.";
 
         // ProgressBar:
-        int sleepCurrentProgress = (int) Math.round(100 * dataProcessor.getInt(date + ",sleep") / 8.0);
+        int sleepCurrentProgress = (int) Math.round(100 * DataProcessor.getInstance(this).getInt(date + ",sleep") / 8.0);
         pbCalSleep.setProgress(sleepCurrentProgress);
         tvCalDreams.setText(updatedDreams);
 

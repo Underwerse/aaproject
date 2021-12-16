@@ -5,33 +5,29 @@ import android.content.SharedPreferences;
 
 public class DataProcessor {
 
-    private final Context context;
+    private final static String PREFS_NAME = "fi.aa.aaproject";
+    private final SharedPreferences sharedPref;
 
-    public DataProcessor(Context context){
-        this.context = context;
+    private static DataProcessor instance;
+
+    public static synchronized DataProcessor getInstance(Context applicationContext){
+        if(instance == null)
+            instance = new DataProcessor(applicationContext);
+        return instance;
     }
 
-    public final static String PREFS_NAME = "fi.aa.aaproject";
-
-    public boolean prefExists(String key) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        return prefs.contains(key);
+    private DataProcessor(Context applicationContext) {
+        sharedPref = applicationContext.getSharedPreferences(
+                PREFS_NAME, Context.MODE_PRIVATE );
     }
 
     public void setInt(String key, int value) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME,0);
-        SharedPreferences.Editor editor = prefs.edit();
+        SharedPreferences.Editor editor = sharedPref.edit();
         editor.putInt(key, value);
         editor.apply();
     }
 
     public int getInt(String key) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        return prefs.getInt(key, 0);
-    }
-
-    public boolean getBool(String key) {
-        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, 0);
-        return prefs.getBoolean(key,false);
+        return sharedPref.getInt(key, 0);
     }
 }
